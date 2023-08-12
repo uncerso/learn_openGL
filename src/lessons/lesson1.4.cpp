@@ -74,8 +74,8 @@ struct Program : public core::Program {
     }
 };
 
-struct Renderer_1_0_1 : public core::Renderer {
-    const char * name() const noexcept override { return "1.0.1"; }
+struct : public core::Renderer {
+    const char * name() const noexcept override { return "1.4:0.1"; }
 
     void prepare() override {
         program.emplace();
@@ -91,10 +91,10 @@ struct Renderer_1_0_1 : public core::Renderer {
     std::optional<core::VertexBuffer> vbo;
     std::optional<core::Drawer<Program>> drawer;
 
-} instance_1_0_1;
+} instance_0_1;
 
-struct Renderer_1_0_2 : public core::Renderer {
-    const char * name() const noexcept override { return "1.0.2"; }
+struct : public core::Renderer {
+    const char * name() const noexcept override { return "1.4:0.2"; }
 
     void prepare() override {
         core::Indexer indices;
@@ -115,10 +115,10 @@ struct Renderer_1_0_2 : public core::Renderer {
     std::optional<core::IndexBuffer> ibo;
     std::optional<core::Drawer<Program>> drawer;
 
-} instance_1_0_2;
+} instance_0_2;
 
-struct Renderer_1_1 : public core::Renderer {
-    const char * name() const noexcept override { return "1.1"; }
+struct : public core::Renderer {
+    const char * name() const noexcept override { return "1.4:1"; }
 
     void prepare() override {
         program.emplace();
@@ -134,10 +134,10 @@ struct Renderer_1_1 : public core::Renderer {
     std::optional<core::VertexBuffer> vbo;
     std::optional<core::Drawer<Program>> drawer;
 
-} instance_1_1;
+} instance_1;
 
-struct Renderer1_2 : public core::Renderer {
-    const char * name() const noexcept override { return "1.2"; }
+struct : public core::Renderer {
+    const char * name() const noexcept override { return "1.4:2"; }
 
     void prepare() override {
         program.emplace();
@@ -158,10 +158,10 @@ struct Renderer1_2 : public core::Renderer {
     std::optional<core::VertexBuffer> vbo2;
     std::optional<core::Drawer<Program>> drawer2;
 
-} instance_1_2;
+} instance_2;
 
-struct Renderer1_3 : public core::Renderer {
-    const char * name() const noexcept override { return "1.3"; }
+struct : public core::Renderer {
+    const char * name() const noexcept override { return "1.4:3"; }
 
     void prepare() override {
         program.emplace();
@@ -185,7 +185,7 @@ struct Renderer1_3 : public core::Renderer {
     std::optional<core::VertexBuffer> vbo2;
     std::optional<core::Drawer<Program>> drawer2;
 
-} instance_1_3;
+} instance_3;
 
 
 } // namespace

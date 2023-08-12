@@ -5,6 +5,8 @@
 #include <string>
 #include <cassert>
 
+
+#include <iostream>
 namespace core {
 
 namespace {
@@ -162,9 +164,21 @@ void UniformFloat::set(float value) {
     glUniform1f(location, value);
 }
 
+void UniformVec2f::set(float v1, float v2) {
+    glUniform2f(location, v1, v2);
+}
+
+void UniformVec3f::set(float v1, float v2, float v3) {
+    glUniform3f(location, v1, v2, v3);
+}
+
+void UniformVec4f::set(float v1, float v2, float v3, float v4) {
+    glUniform4f(location, v1, v2, v3, v4);
+}
+
 void Program::enableAttributes() const {
     for (auto const & attr : attributes) {
-        glVertexAttribPointer(attr.location, attr.size, toGL(attr.type), attr.offset, stride, (const void *)attr.normalize);
+        glVertexAttribPointer(attr.location, attr.size, toGL(attr.type), attr.normalize, stride, (const GLvoid *)attr.offset);
         glEnableVertexAttribArray(attr.location);
     }
 }

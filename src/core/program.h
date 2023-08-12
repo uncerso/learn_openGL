@@ -53,5 +53,19 @@ struct UniformFloat : UniformBase {
     void set(float value);
 };
 
+struct UniformVec2f : UniformBase {
+    UniformVec2f(int location) : UniformBase(location) {}
+    void set(float v1, float v2);
+};
+
+struct UniformVec3f : UniformBase {
+    UniformVec3f(int location) : UniformBase(location) {}
+    void set(float v1, float v2, float v3);
+};
+
+struct UniformVec4f : UniformBase {
+    UniformVec4f(int location) : UniformBase(location) {}
+    void set(float v1, float v2, float v3, float v4);
+};
 
 } // namespace core

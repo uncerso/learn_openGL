@@ -1,4 +1,5 @@
 #pragma once
+#include <cstdint>
 
 namespace core {
 
@@ -25,7 +26,7 @@ struct LocatedAttribute {
     int location;
     unsigned int size;
     Attribute::Type type;
-    unsigned int offset;
+    uintptr_t offset;
     bool normalize;
 };
 

@@ -18,10 +18,17 @@ void keyCallback(GLFWwindow* window, int key, int /* scancode */, int action, in
         glfwSetWindowShouldClose(window, GL_TRUE);
 }
 
+void error_callback(int error, char const * msg) {
+    using namespace std::string_literals;
+    throw " ["s + std::to_string(error) + "] "s + msg;
+}
+
 } // namespace
 
 Window& Window::create(size_t width, size_t height) {
-    glfwInit();
+    glfwSetErrorCallback(error_callback);
+
+    REQUIRE(glfwInit()==GLFW_TRUE, "Cannot init glfw");
 
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
