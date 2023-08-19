@@ -23,11 +23,13 @@ public:
     ~Window();
 
     void render(Renderer & renderer);
+    void keyAction(KeyAction action, Key key);
 
     const size_t width;
     const size_t height;
 private:
     GLFWwindow * window;
+    Renderer * executing_renderer = nullptr;
 };
 
 } // namespace core

@@ -176,6 +176,12 @@ void UniformVec4f::set(float v1, float v2, float v3, float v4) {
     glUniform4f(location, v1, v2, v3, v4);
 }
 
+void UniformTexture::set(Texture2D const & texture) {
+    glActiveTexture(GL_TEXTURE0 + texture_block);
+    texture.bind();
+    glUniform1i(location, texture_block);
+}
+
 void Program::enableAttributes() const {
     for (auto const & attr : attributes) {
         glVertexAttribPointer(attr.location, attr.size, toGL(attr.type), attr.normalize, stride, (const GLvoid *)attr.offset);

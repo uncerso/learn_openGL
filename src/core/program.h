@@ -3,6 +3,7 @@
 #include "internal/resource.h"
 #include "internal/movable.h"
 #include "attribute.h"
+#include "texture.h"
 
 #include <vector>
 
@@ -66,6 +67,17 @@ struct UniformVec3f : UniformBase {
 struct UniformVec4f : UniformBase {
     UniformVec4f(int location) : UniformBase(location) {}
     void set(float v1, float v2, float v3, float v4);
+};
+
+struct UniformTexture : UniformBase {
+    UniformTexture(int location, int texture_block)
+        : UniformBase(location)
+        , texture_block(texture_block)
+    {}
+
+    void set(Texture2D const & texture);
+private:
+    int texture_block;
 };
 
 } // namespace core

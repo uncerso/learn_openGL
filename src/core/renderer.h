@@ -1,5 +1,7 @@
 #pragma once
 
+#include "keys.h"
+
 namespace std {
 template < typename > struct allocator;
 template < typename, typename > struct vector ;
@@ -19,6 +21,7 @@ public:
     virtual const char * name() const noexcept = 0;
     virtual void prepare() = 0;
     virtual void render() = 0;
+    virtual void keyAction(KeyAction, Key) {}
 };
 
 } // namespace core
