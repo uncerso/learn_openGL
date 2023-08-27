@@ -20,12 +20,24 @@ void keyCallback(GLFWwindow* window, int glfw_key, int /* scancode */, int glfw_
     Key key = toKey(glfw_key);
     KeyAction action = toKeyAction(glfw_action);
     if (action == KeyAction::Press && (key == Key::ESCAPE || key == Key::Q)) {
-        glfwSetWindowShouldClose(window, GL_TRUE);
+        if (windowSingleton) {
+            windowSingleton->stopRendering(Window::ExitReason::Quit);
+        } else {
+            glfwSetWindowShouldClose(window, GL_TRUE);
+        }
         return;
     }
 
-    if (windowSingleton)
+    if (!windowSingleton)
+        return;
+
+    if (action == KeyAction::Press && key == Key::LEFT) {
+        windowSingleton->stopRendering(Window::ExitReason::RequestedPrev);
+    } else if (action == KeyAction::Press && key == Key::RIGHT) {
+        windowSingleton->stopRendering(Window::ExitReason::RequestedNext);
+    } else {
         windowSingleton->keyAction(action, key);
+    }
 }
 
 void error_callback(int error, char const * msg) {
@@ -71,6 +83,9 @@ Window& Window::get() {
     return *windowSingleton;
 }
 
+void Window::stopRendering(ExitReason reason) {
+    exit_reason.emplace(reason);
+}
 
 Window::Window(size_t width, size_t height, GLFWwindow * window)
     : width(width)
@@ -80,31 +95,36 @@ Window::Window(size_t width, size_t height, GLFWwindow * window)
 
 Window::~Window() {
     if (window) {
+        glfwSetWindowShouldClose(window, GL_TRUE);
         glfwDestroyWindow(window);
         window = nullptr;
     }
     glfwTerminate();
 }
 
-void Window::render(Renderer & renderer) {
+Window::ExitReason Window::render(Renderer & renderer) {
+    exit_reason.reset();
     PointerGuard _(executing_renderer, &renderer);
 
     int w, h;
     glfwGetFramebufferSize(window, &w, &h);  
     glViewport(0, 0, w, h);
 
+    renderer.width = static_cast<size_t>(w);
+    renderer.height = static_cast<size_t>(h);
+
     renderer.prepare();
 
-    while (!glfwWindowShouldClose(window)) {
+    while (!exit_reason) {
         glfwPollEvents();
 
-        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
-
+        renderer.prepareFrameRendering();
         renderer.render();
 
         glfwSwapBuffers(window);
     }
+
+    return *exit_reason;
 }
 
 void Window::keyAction(KeyAction action, Key key) {

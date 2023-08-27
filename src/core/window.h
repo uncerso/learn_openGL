@@ -3,6 +3,7 @@
 #include "renderer.h"
 
 #include <cstddef>
+#include <optional>
 
 class GLFWwindow;
 
@@ -17,19 +18,26 @@ class Window {
     Window & operator = (Window const &) = delete;
     Window & operator = (Window &&) = delete;
 public:
+    enum class ExitReason {
+        Quit, RequestedPrev, RequestedNext
+    };
+
     static Window & create(size_t width, size_t height);
     static Window & get();
 
     ~Window();
 
-    void render(Renderer & renderer);
+    ExitReason render(Renderer & renderer);
     void keyAction(KeyAction action, Key key);
+
+    void stopRendering(ExitReason);
 
     const size_t width;
     const size_t height;
 private:
     GLFWwindow * window;
     Renderer * executing_renderer = nullptr;
+    std::optional<ExitReason> exit_reason;
 };
 
 } // namespace core

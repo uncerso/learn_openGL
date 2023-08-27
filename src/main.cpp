@@ -37,6 +37,38 @@ core::Renderer * chooseRenderer(char const * renderer_raw_name) {
     return nullptr;
 }
 
+core::Renderer * findPrevRenderer(core::Renderer * target_renderer) {
+    auto& renderers = core::Renderer::renderers();
+    if (renderers.empty())
+        return nullptr;
+    
+    auto prev_renderer = renderers.begin();
+    for (; prev_renderer != renderers.end(); ++prev_renderer) {
+        auto cur_renderer = std::next(prev_renderer);
+        if (cur_renderer == renderers.end())
+            return nullptr;
+        if (target_renderer == *cur_renderer)
+            return *prev_renderer;
+    }
+    return nullptr;
+}
+
+core::Renderer * findNextRenderer(core::Renderer * target_renderer) {
+    auto& renderers = core::Renderer::renderers();
+    if (renderers.empty())
+        return nullptr;
+    
+    auto prev_renderer = renderers.rbegin();
+    for (; prev_renderer != renderers.rend(); ++prev_renderer) {
+        auto cur_renderer = std::next(prev_renderer);
+        if (cur_renderer == renderers.rend())
+            return nullptr;
+        if (target_renderer == *cur_renderer)
+            return *prev_renderer;
+    }
+    return nullptr;
+}
+
 } // namespace
 
 int main(int argc, char const * argv[]) {
@@ -58,10 +90,21 @@ int main(int argc, char const * argv[]) {
             return 2;
         }
 
-        std::cout << "Selected solution: " << renderer->name() << std::endl;
-
         auto& window = core::Window::create(800, 600);
-        window.render(*renderer);
+
+        core::Window::ExitReason exit_reason;
+        do {
+            std::cout << "Selected solution: " << renderer->name() << std::endl;
+            exit_reason = window.render(*renderer);
+            if (exit_reason == core::Window::ExitReason::RequestedPrev) {
+                if (auto* prev_renderer = findPrevRenderer(renderer))
+                    renderer = prev_renderer;
+            }
+            if (exit_reason == core::Window::ExitReason::RequestedNext) {
+                if (auto* next_renderer = findNextRenderer(renderer))
+                    renderer = next_renderer;
+            }
+        } while (exit_reason != core::Window::ExitReason::Quit);
 
     } catch (std::exception const & e) {
         std::cerr << "Error: " << e.what() << std::endl;

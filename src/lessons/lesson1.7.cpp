@@ -1,3 +1,5 @@
+#include "primitives.h"
+
 #include "../core/renderer.h"
 #include "../core/drawer.h"
 #include "../core/indexer.h"
@@ -64,27 +66,13 @@ struct Program : public core::Program {
     }
 };
 
-struct TexturedVertex {
-    glm::vec2 pos;
-    glm::vec2 texCoord;
-};
-
-using TexturedRectangle = std::array<TexturedVertex, 4>;
-
-constexpr TexturedRectangle RECTANGLE = {{
-    {{ 0.5f,  0.5f}, {1, 1-1}}, // Right Top 
-    {{ 0.5f, -0.5f}, {1, 1-0}}, // Right Bottom
-    {{-0.5f,  0.5f}, {0, 1-1}}, // Left Top
-    {{-0.5f, -0.5f}, {0, 1-0}}, // Left Bottom
-}};
-
 struct : public core::Renderer {
     const char * name() const noexcept override { return "1.7:0.1"; }
 
     void prepare() override {
         using namespace std::chrono_literals;
         program.emplace();
-        vbo.emplace(RECTANGLE.data(), RECTANGLE.size(), sizeof(RECTANGLE[0]), core::BufferUsage::StaticDraw);
+        vbo.emplace(prim::TEXTURED_RECTANGLE.data(), prim::TEXTURED_RECTANGLE.size(), sizeof(prim::TEXTURED_RECTANGLE[0]), core::BufferUsage::StaticDraw);
         drawer.emplace(*program, *vbo);
         texture1.emplace(core::loadResource(core::ImgResources::WoodContainer));
         texture2.emplace(core::loadResource(core::ImgResources::AwesomeFace));
@@ -132,7 +120,7 @@ struct : public core::Renderer {
     void prepare() override {
         using namespace std::chrono_literals;
         program.emplace();
-        vbo.emplace(task01::RECTANGLE.data(), task01::RECTANGLE.size(), sizeof(task01::RECTANGLE[0]), core::BufferUsage::StaticDraw);
+        vbo.emplace(prim::TEXTURED_RECTANGLE.data(), prim::TEXTURED_RECTANGLE.size(), sizeof(prim::TEXTURED_RECTANGLE[0]), core::BufferUsage::StaticDraw);
         drawer.emplace(*program, *vbo);
         texture1.emplace(core::loadResource(core::ImgResources::WoodContainer));
         texture2.emplace(core::loadResource(core::ImgResources::AwesomeFace));
@@ -181,7 +169,7 @@ struct : public core::Renderer {
     void prepare() override {
         using namespace std::chrono_literals;
         program.emplace();
-        vbo.emplace(task01::RECTANGLE.data(), task01::RECTANGLE.size(), sizeof(task01::RECTANGLE[0]), core::BufferUsage::StaticDraw);
+        vbo.emplace(prim::TEXTURED_RECTANGLE.data(), prim::TEXTURED_RECTANGLE.size(), sizeof(prim::TEXTURED_RECTANGLE[0]), core::BufferUsage::StaticDraw);
         drawer.emplace(*program, *vbo);
         texture1.emplace(core::loadResource(core::ImgResources::WoodContainer));
         texture2.emplace(core::loadResource(core::ImgResources::AwesomeFace));

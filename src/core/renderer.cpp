@@ -1,4 +1,5 @@
 #include "renderer.h"
+#include "opengl.h"
 
 #include <vector>
 
@@ -17,6 +18,12 @@ Renderer::Renderer() {
 
 std::vector<Renderer*> const & Renderer::renderers() {
     return all_renderers;
+}
+
+void Renderer::prepareFrameRendering() {
+    glDisable(GL_DEPTH_TEST);
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
 }
 
 } // namespace core
