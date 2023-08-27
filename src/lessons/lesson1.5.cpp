@@ -13,10 +13,6 @@
 
 namespace {
 
-struct Vec3 {
-    float x, y, z;
-};
-
 namespace task01 {
 
 constexpr auto VERTEX_SHADER_SOURCE = 
@@ -36,8 +32,8 @@ constexpr auto FRAGMENT_SHADER_SOURCE =
     };
     )~";
 
-using Triangle = std::array<Vec3, 3>;
-using Rectangle = std::array<Vec3, 4>;
+using Triangle = std::array<glm::vec3, 3>;
+using Rectangle = std::array<glm::vec3, 4>;
 
 constexpr Triangle TRIANGLE = {{
     {-0.5f, -0.5f, 0.0f}, // Left  
@@ -71,7 +67,7 @@ struct Renderer_1_5_0_1 : public core::Renderer {
 
     void render() override {
         float red_value = (std::sin(animation->progress()) + 1) / 2;
-        drawer->program().color.set(red_value, 0, 0);
+        drawer->program().color.set({red_value, 0, 0});
         drawer->draw(core::PrimitiveType::Triangles);
     }
 
@@ -107,8 +103,8 @@ constexpr auto FRAGMENT_SHADER_SOURCE =
     )~";
 
 struct ColoredVertex {
-    Vec3 pos;
-    Vec3 color;
+    glm::vec3 pos;
+    glm::vec3 color;
 };
 
 using ColoredTriangle = std::array<ColoredVertex, 3>;

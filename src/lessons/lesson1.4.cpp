@@ -32,12 +32,8 @@ constexpr auto YELLOW_FRAGMENT_SHADER_SOURCE =
     };
     )~";
 
-struct Vec3 {
-    float x, y, z;
-};
-
-using Triangle = std::array<Vec3, 3>;
-using Rectangle = std::array<Vec3, 4>;
+using Triangle = std::array<glm::vec3, 3>;
+using Rectangle = std::array<glm::vec3, 4>;
 
 constexpr Triangle TRIANGLE = {{
         {-0.5f, -0.5f, 0.0f}, // Left  

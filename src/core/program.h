@@ -6,6 +6,7 @@
 #include "texture.h"
 
 #include <vector>
+#include <glm/glm.hpp>
 
 namespace core {
 
@@ -56,17 +57,22 @@ struct UniformFloat : UniformBase {
 
 struct UniformVec2f : UniformBase {
     UniformVec2f(int location) : UniformBase(location) {}
-    void set(float v1, float v2);
+    void set(glm::vec2 v);
 };
 
 struct UniformVec3f : UniformBase {
     UniformVec3f(int location) : UniformBase(location) {}
-    void set(float v1, float v2, float v3);
+    void set(glm::vec3 v);
 };
 
 struct UniformVec4f : UniformBase {
     UniformVec4f(int location) : UniformBase(location) {}
-    void set(float v1, float v2, float v3, float v4);
+    void set(glm::vec4 v);
+};
+
+struct UniformMat4f : UniformBase {
+    UniformMat4f(int location) : UniformBase(location) {}
+    void set(glm::mat4 v);
 };
 
 struct UniformTexture : UniformBase {

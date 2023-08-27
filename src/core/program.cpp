@@ -5,6 +5,7 @@
 #include <string>
 #include <cassert>
 
+#include <glm/gtc/type_ptr.hpp>
 
 #include <iostream>
 namespace core {
@@ -164,16 +165,20 @@ void UniformFloat::set(float value) {
     glUniform1f(location, value);
 }
 
-void UniformVec2f::set(float v1, float v2) {
-    glUniform2f(location, v1, v2);
+void UniformVec2f::set(glm::vec2 v) {
+    glUniform2f(location, v.x, v.y);
 }
 
-void UniformVec3f::set(float v1, float v2, float v3) {
-    glUniform3f(location, v1, v2, v3);
+void UniformVec3f::set(glm::vec3 v) {
+    glUniform3f(location, v.x, v.y, v.z);
 }
 
-void UniformVec4f::set(float v1, float v2, float v3, float v4) {
-    glUniform4f(location, v1, v2, v3, v4);
+void UniformVec4f::set(glm::vec4 v) {
+    glUniform4f(location, v.x, v.y, v.z, v.w);
+}
+
+void UniformMat4f::set(glm::mat4 v) {
+    glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(v));
 }
 
 void UniformTexture::set(Texture2D const & texture) {

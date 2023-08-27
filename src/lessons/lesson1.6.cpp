@@ -14,14 +14,6 @@
 
 namespace {
 
-struct Vec2 {
-    float x, y;
-};
-
-struct Vec3 {
-    float x, y, z;
-};
-
 namespace task01 {
 
 constexpr auto VERTEX_SHADER_SOURCE = 
@@ -61,8 +53,8 @@ struct Program : public core::Program {
 };
 
 struct TexturedVertex {
-    Vec2 pos;
-    Vec2 texCoord;
+    glm::vec2 pos;
+    glm::vec2 texCoord;
 };
 
 using TexturedRectangle = std::array<TexturedVertex, 4>;
@@ -144,9 +136,9 @@ struct Program : public core::Program {
 };
 
 struct TexturedColoredVertex {
-    Vec2 pos;
-    Vec2 texCoord;
-    Vec3 color;
+    glm::vec2 pos;
+    glm::vec2 texCoord;
+    glm::vec3 color;
 };
 
 using TexturedColoredRectangle = std::array<TexturedColoredVertex, 4>;
