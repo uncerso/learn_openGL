@@ -4,6 +4,7 @@
 
 #include <cstddef>
 #include <optional>
+#include <glm/vec2.hpp>
 
 class GLFWwindow;
 
@@ -29,6 +30,7 @@ public:
 
     ExitReason render(Renderer & renderer);
     void keyAction(KeyAction action, Key key);
+    void mouseMoveAction(glm::vec2 pos);
 
     void stopRendering(ExitReason);
 
@@ -38,6 +40,7 @@ private:
     GLFWwindow * window;
     Renderer * executing_renderer = nullptr;
     std::optional<ExitReason> exit_reason;
+    std::optional<glm::vec2> prev_mouse_pos;
 };
 
 } // namespace core

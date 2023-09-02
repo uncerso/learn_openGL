@@ -19,7 +19,7 @@ KeyAction toKeyAction(int glfw_action);
 void keyCallback(GLFWwindow* window, int glfw_key, int /* scancode */, int glfw_action, int /* mode */) {
     Key key = toKey(glfw_key);
     KeyAction action = toKeyAction(glfw_action);
-    if (action == KeyAction::Press && (key == Key::ESCAPE || key == Key::Q)) {
+    if (action == KeyAction::Press && key == Key::ESCAPE) {
         if (windowSingleton) {
             windowSingleton->stopRendering(Window::ExitReason::Quit);
         } else {
@@ -38,6 +38,11 @@ void keyCallback(GLFWwindow* window, int glfw_key, int /* scancode */, int glfw_
     } else {
         windowSingleton->keyAction(action, key);
     }
+}
+
+void mouseCallback(GLFWwindow*, double xPos, double yPos) {
+    if (windowSingleton)
+        windowSingleton->mouseMoveAction({xPos, yPos});
 }
 
 void error_callback(int error, char const * msg) {
@@ -70,6 +75,7 @@ Window& Window::create(size_t width, size_t height) {
 
     glfwMakeContextCurrent(window);
     glfwSetKeyCallback(window, keyCallback);
+    glfwSetCursorPosCallback(window, mouseCallback);
 
     glewExperimental = GL_TRUE;
     REQUIRE(glewInit() == GLEW_OK, "Failed to initialize GLEW");
@@ -104,7 +110,6 @@ Window::~Window() {
 
 Window::ExitReason Window::render(Renderer & renderer) {
     exit_reason.reset();
-    PointerGuard _(executing_renderer, &renderer);
 
     int w, h;
     glfwGetFramebufferSize(window, &w, &h);  
@@ -113,13 +118,20 @@ Window::ExitReason Window::render(Renderer & renderer) {
     renderer.width = static_cast<size_t>(w);
     renderer.height = static_cast<size_t>(h);
 
+    glfwSetInputMode(window, GLFW_CURSOR, renderer.captureCamera() ? GLFW_CURSOR_DISABLED : GLFW_CURSOR_NORMAL);
+    prev_mouse_pos.reset();
+
+    PointerGuard _(executing_renderer, &renderer);
     renderer.prepare();
 
+    float prev_render_time = float(glfwGetTime());
     while (!exit_reason) {
         glfwPollEvents();
 
+        float current_render_time = float(glfwGetTime());
         renderer.prepareFrameRendering();
-        renderer.render();
+        renderer.render(current_render_time - prev_render_time);
+        prev_render_time = current_render_time;
 
         glfwSwapBuffers(window);
     }
@@ -130,6 +142,15 @@ Window::ExitReason Window::render(Renderer & renderer) {
 void Window::keyAction(KeyAction action, Key key) {
     if (executing_renderer)
         executing_renderer->keyAction(action, key);
+}
+
+void Window::mouseMoveAction(glm::vec2 pos) {
+    if (executing_renderer) {
+        if (prev_mouse_pos)
+            executing_renderer->mouseMoveDelta(pos - *prev_mouse_pos);
+        executing_renderer->mouseMove(pos);
+    }
+    prev_mouse_pos = pos;
 }
 
 namespace {
