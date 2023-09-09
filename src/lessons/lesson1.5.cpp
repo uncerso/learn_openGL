@@ -1,15 +1,4 @@
-#include "../core/renderer.h"
-#include "../core/drawer.h"
-#include "../core/indexer.h"
-#include "../core/opengl.h"
-#include "../core/animation.h"
-
-#include <string>
-#include <optional>
-#include <array>
-#include <numbers>
-#include <cmath>
-#include <iostream>
+#include "helpers/preset.h"
 
 namespace {
 

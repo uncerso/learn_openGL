@@ -1,20 +1,4 @@
-#include "primitives.h"
-
-#include "../core/renderer.h"
-#include "../core/drawer.h"
-#include "../core/indexer.h"
-#include "../core/opengl.h"
-#include "../core/animation.h"
-#include "../core/image_resource_loader.h"
-
-#include <glm/gtc/matrix_transform.hpp>
-
-#include <string>
-#include <optional>
-#include <array>
-#include <numbers>
-#include <cmath>
-#include <iostream>
+#include "helpers/preset.h"
 
 namespace {
 
