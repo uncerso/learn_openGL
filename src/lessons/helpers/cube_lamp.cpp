@@ -38,13 +38,13 @@ CubeLamp::CubeLamp(glm::vec3 light_pos)
     : light_pos(light_pos)
     , vbo(prim::QUBE.data(), prim::QUBE.size(), sizeof(prim::QUBE[0]), core::BufferUsage::StaticDraw)
     , drawer(program, vbo)
-{
+{}
+
+void CubeLamp::draw(glm::mat4 const & viewProj) {
     glm::mat4 model = glm::translate(glm::one<glm::mat4>(), light_pos);
     model = glm::scale(model, glm::vec3(0.2f));
     drawer.program().model.set(model);
-}
-
-void CubeLamp::draw(glm::mat4 const & viewProj) {
+ 
     drawer.program().viewProjection.set(viewProj);
     drawer.draw(core::PrimitiveType::Triangles);
 }

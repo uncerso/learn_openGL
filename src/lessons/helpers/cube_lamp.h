@@ -18,7 +18,7 @@ public:
 
     void draw(glm::mat4 const & viewProj);
 
-    glm::vec3 const light_pos;
+    glm::vec3 light_pos;
 private:
     Program program;
     core::VertexBuffer vbo;

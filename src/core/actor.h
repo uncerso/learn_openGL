@@ -37,8 +37,8 @@ public:
         case Key::S: move_backward      = is_pressed; break;
         case Key::A: move_left          = is_pressed; break;
         case Key::D: move_right         = is_pressed; break;
-        case Key::Q: rotate_left        = is_pressed; break;
-        case Key::E: rotate_right       = is_pressed; break;
+        case Key::E: rotate_left        = is_pressed; break;
+        case Key::Q: rotate_right       = is_pressed; break;
         case Key::SPACE:      move_up   = is_pressed; break;
         case Key::LEFT_SHIFT: move_down = is_pressed; break;
         case Key::LEFT_CONTROL: speedup = is_pressed; break;
@@ -71,6 +71,7 @@ public:
     }
 
     glm::mat4 viewProj() const { return camera.viewProj(); }
+    glm::vec3 pos() const { return camera.pos; }
 private:
     void mouseMoveDeltaDefault(glm::vec2 delta) {
         float angle = glm::length(delta) * config.mouse_sensitivity;

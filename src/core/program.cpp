@@ -177,6 +177,14 @@ void UniformVec4f::set(glm::vec4 v) {
     glUniform4f(location, v.x, v.y, v.z, v.w);
 }
 
+void UniformMat2f::set(glm::mat2 v) {
+    glUniformMatrix2fv(location, 1, GL_FALSE, glm::value_ptr(v));
+}
+
+void UniformMat3f::set(glm::mat3 v) {
+    glUniformMatrix3fv(location, 1, GL_FALSE, glm::value_ptr(v));
+}
+
 void UniformMat4f::set(glm::mat4 v) {
     glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(v));
 }

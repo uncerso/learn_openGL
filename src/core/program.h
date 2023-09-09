@@ -70,6 +70,16 @@ struct UniformVec4f : UniformBase {
     void set(glm::vec4 v);
 };
 
+struct UniformMat2f : UniformBase {
+    UniformMat2f(int location) : UniformBase(location) {}
+    void set(glm::mat2 v);
+};
+
+struct UniformMat3f : UniformBase {
+    UniformMat3f(int location) : UniformBase(location) {}
+    void set(glm::mat3 v);
+};
+
 struct UniformMat4f : UniformBase {
     UniformMat4f(int location) : UniformBase(location) {}
     void set(glm::mat4 v);
