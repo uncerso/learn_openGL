@@ -49,4 +49,13 @@ void CubeLamp::draw(glm::mat4 const & viewProj) {
     drawer.draw(core::PrimitiveType::Triangles);
 }
 
+core::Light CubeLamp::light() const {
+    return {
+        .position = light_pos,
+        .ambient = {0.2f, 0.2f, 0.2f},
+        .diffuse = {0.5f, 0.5f, 0.5f},
+        .specular = {1.0f, 1.0f, 1.0f},
+    };
+}
+
 } // namespace lamp

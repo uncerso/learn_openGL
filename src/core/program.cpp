@@ -195,6 +195,34 @@ void UniformTexture::set(Texture2D const & texture) {
     glUniform1i(location, texture_block);
 }
 
+UniformMaterial::UniformMaterial(Program & program)
+    : ambient(program.uniformLocation("uMaterial.ambient"))
+    , diffuse(program.uniformLocation("uMaterial.diffuse"))
+    , specular(program.uniformLocation("uMaterial.specular"))
+    , shininess(program.uniformLocation("uMaterial.shininess"))
+{}
+
+void UniformMaterial::set(Material const & material) {
+    ambient.set(material.ambient);
+    diffuse.set(material.diffuse);
+    specular.set(material.specular);
+    shininess.set(material.shininess);
+}
+
+UniformLight::UniformLight(Program & program)
+    : position(program.uniformLocation("uLight.position"))
+    , ambient(program.uniformLocation("uLight.ambient"))
+    , diffuse(program.uniformLocation("uLight.diffuse"))
+    , specular(program.uniformLocation("uLight.specular"))
+{}
+
+void UniformLight::set(Light const & light) {
+    position.set(light.position);
+    ambient.set(light.ambient);
+    diffuse.set(light.diffuse);
+    specular.set(light.specular);
+}
+
 void Program::enableAttributes() const {
     for (auto const & attr : attributes) {
         glVertexAttribPointer(attr.location, attr.size, toGL(attr.type), attr.normalize, stride, (const GLvoid *)attr.offset);

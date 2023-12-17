@@ -3,6 +3,8 @@
 #include "internal/resource.h"
 #include "internal/movable.h"
 #include "attribute.h"
+#include "light.h"
+#include "material.h"
 #include "texture.h"
 
 #include <vector>
@@ -94,6 +96,26 @@ struct UniformTexture : UniformBase {
     void set(Texture2D const & texture);
 private:
     int texture_block;
+};
+
+struct UniformMaterial {
+    UniformMaterial(Program & program);
+    void set(Material const & material);
+private:
+    UniformVec3f ambient;
+    UniformVec3f diffuse;
+    UniformVec3f specular;
+    UniformFloat shininess;
+};
+
+struct UniformLight {
+    UniformLight(Program & program);
+    void set(Light const & light);
+private:
+    UniformVec3f position;
+    UniformVec3f ambient;
+    UniformVec3f diffuse;
+    UniformVec3f specular;
 };
 
 } // namespace core
