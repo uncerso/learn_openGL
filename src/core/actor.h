@@ -2,7 +2,6 @@
 
 #include "camera.h"
 #include "keys.h"
-#include "glm/gtx/quaternion.hpp"
 
 #include <iostream>
 

@@ -4,6 +4,8 @@ project(LearnOpenGL)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
+add_compile_definitions("GLM_ENABLE_EXPERIMENTAL")
+
 set(CUSTOM_FLAGS "-Werror -pedantic-errors -Wall -Wextra -Wpedantic -Wcast-align -Wcast-qual -Wconversion -Wctor-dtor-privacy -Wextra-semi -Wfloat-equal -Wnon-virtual-dtor -Woverloaded-virtual -Wredundant-decls -Wsign-conversion -Wsign-promo")
 set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} ${CUSTOM_FLAGS})
 set(CMAKE_CXX_FLAGS_DEBUG -g)

@@ -1,6 +1,6 @@
 #include "helpers/preset.h"
 #include "helpers/cube_lamp.h"
-
+#include <glm/gtx/quaternion.hpp>
 namespace {
 
 namespace task01 {

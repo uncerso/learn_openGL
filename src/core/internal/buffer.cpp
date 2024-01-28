@@ -53,7 +53,7 @@ void Buffer<type>::unbind() {
 template<BufferType type>
 void Buffer<type>::load(const std::byte* data, size_t size, BufferUsage usage) {
     bind();
-    glBufferData(toGL<type>(), size, data, toGL(usage));
+    glBufferData(toGL<type>(), static_cast<GLsizeiptr>(size), data, toGL(usage));
 }
 
 template class Buffer<BufferType::Vertex>;
