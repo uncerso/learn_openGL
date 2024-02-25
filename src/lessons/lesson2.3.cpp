@@ -69,7 +69,7 @@ struct Program : public core::Program {
         , normal_matrix(uniformLocation("uNormalMatrix"))
     {}
 
-    core::UniformMaterial material;
+    core::UniformSimpleMaterial material;
     core::UniformVec3f light_color;
     core::UniformVec3f light_pos;
     core::UniformVec3f view_pos;
@@ -198,7 +198,7 @@ struct Program : public core::Program {
         , normal_matrix(uniformLocation("uNormalMatrix"))
     {}
 
-    core::UniformMaterial material;
+    core::UniformSimpleMaterial material;
     core::UniformLight light;
     core::UniformVec3f view_pos;
     core::UniformMat4f model;

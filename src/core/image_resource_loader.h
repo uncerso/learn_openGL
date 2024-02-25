@@ -6,7 +6,9 @@ namespace core {
 
 enum class ImgResources {
     WoodContainer,
-    AwesomeFace
+    AwesomeFace,
+    Container2,
+    Container2_specular,
 };
 
 Image loadResource(ImgResources res);

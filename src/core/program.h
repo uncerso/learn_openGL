@@ -98,13 +98,22 @@ private:
     int texture_block;
 };
 
-struct UniformMaterial {
-    UniformMaterial(Program & program);
-    void set(Material const & material);
+struct UniformSimpleMaterial {
+    UniformSimpleMaterial(Program & program);
+    void set(SimpleMaterial const & material);
 private:
     UniformVec3f ambient;
     UniformVec3f diffuse;
     UniformVec3f specular;
+    UniformFloat shininess;
+};
+
+struct UniformMaterial {
+    UniformMaterial(Program & program, int diffuse_texture_block, int specular_texture_block);
+    void set(Material const & material);
+private:
+    UniformTexture diffuse;
+    UniformTexture specular;
     UniformFloat shininess;
 };
 

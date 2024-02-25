@@ -33,7 +33,7 @@ struct Shader {
 
     GLuint shader;
 
-    Shader(Type type, const char * shader_source) 
+    Shader(Type type, const char * shader_source)
         : shader(glCreateShader(toGLenum(type)))
     {
         glShaderSource(shader, 1, &shader_source, NULL);
@@ -195,15 +195,27 @@ void UniformTexture::set(Texture2D const & texture) {
     glUniform1i(location, texture_block);
 }
 
-UniformMaterial::UniformMaterial(Program & program)
+UniformSimpleMaterial::UniformSimpleMaterial(Program & program)
     : ambient(program.uniformLocation("uMaterial.ambient"))
     , diffuse(program.uniformLocation("uMaterial.diffuse"))
     , specular(program.uniformLocation("uMaterial.specular"))
     , shininess(program.uniformLocation("uMaterial.shininess"))
 {}
 
-void UniformMaterial::set(Material const & material) {
+void UniformSimpleMaterial::set(SimpleMaterial const & material) {
     ambient.set(material.ambient);
+    diffuse.set(material.diffuse);
+    specular.set(material.specular);
+    shininess.set(material.shininess);
+}
+
+UniformMaterial::UniformMaterial(Program & program, int diffuse_texture_block, int specular_texture_block)
+    : diffuse(program.uniformLocation("uMaterial.diffuse"), diffuse_texture_block)
+    , specular(program.uniformLocation("uMaterial.specular"), specular_texture_block)
+    , shininess(program.uniformLocation("uMaterial.shininess"))
+{}
+
+void UniformMaterial::set(Material const & material) {
     diffuse.set(material.diffuse);
     specular.set(material.specular);
     shininess.set(material.shininess);

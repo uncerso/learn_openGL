@@ -40,6 +40,8 @@ Image loadResource(ImgResources res) {
     switch (res) {
     case ImgResources::WoodContainer: return load(AS_RES("wood_container.jpg"));
     case ImgResources::AwesomeFace: return load(AS_RES("awesomeface.png"));
+    case ImgResources::Container2: return load(AS_RES("container2.png"));
+    case ImgResources::Container2_specular: return load(AS_RES("container2_specular.png"));
     }
 }
 
