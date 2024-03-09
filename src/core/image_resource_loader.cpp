@@ -5,9 +5,10 @@
 #include <cassert>
 #include <string_view>
 #include <span>
+#include <cstdint>
 
+using BytesBufferView = std::span<const uint8_t>;
 namespace core {
-#define AS_RES(p) ("../resources/img/" p)
 
 namespace {
 Image::Format toFormat(int channels) {
@@ -18,10 +19,9 @@ Image::Format toFormat(int channels) {
     }
 }
 
-Image load(std::string_view path) {
+Image load(BytesBufferView buffer) {
     int w, h, channels;
-    // todo: use embed and SOIL_load_image_from_memory
-    auto* data = SOIL_load_image(path.data(), &w, &h, &channels, SOIL_LOAD_AUTO);
+    auto* data = SOIL_load_image_from_memory(buffer.data(), (int)buffer.size(), &w, &h, &channels, SOIL_LOAD_AUTO);
     assert(data && "cannot load image data");
     std::span<std::byte> dataView(reinterpret_cast<std::byte*>(data), size_t(w * h * channels));
     Image img {
@@ -38,10 +38,18 @@ Image load(std::string_view path) {
 
 Image loadResource(ImgResources res) {
     switch (res) {
-    case ImgResources::WoodContainer: return load(AS_RES("wood_container.jpg"));
-    case ImgResources::AwesomeFace: return load(AS_RES("awesomeface.png"));
-    case ImgResources::Container2: return load(AS_RES("container2.png"));
-    case ImgResources::Container2_specular: return load(AS_RES("container2_specular.png"));
+    case ImgResources::WoodContainer: return load(BytesBufferView({
+        #include <resources/img/wood_container.h>
+    }));
+    case ImgResources::AwesomeFace: return load(BytesBufferView({
+        #include <resources/img/awesomeface.h>
+    }));
+    case ImgResources::Container2: return load(BytesBufferView({
+        #include <resources/img/container2.h>
+    }));
+    case ImgResources::Container2_specular: return load(BytesBufferView({
+        #include <resources/img/container2_specular.h>
+    }));
     }
 }
 

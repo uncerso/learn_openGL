@@ -11,12 +11,17 @@ set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} ${CUSTOM_FLAGS})
 set(CMAKE_CXX_FLAGS_DEBUG -g)
 set(CMAKE_CXX_FLAGS_RELEASE -O3)
 
+set(GENERATED_FILES ${CMAKE_CURRENT_BINARY_DIR}/generated_files)
+
+include(cmake/embed.cmake)
+
 file(GLOB_RECURSE SOURCES main.cpp core/*.cpp lessons/*.cpp)
 add_executable(run ${SOURCES})
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/modules")
 
-target_include_directories(run PRIVATE .)
+target_include_directories(run PRIVATE . ${GENERATED_FILES})
+add_dependencies(run IMGResources)
 
 find_package(GLEW REQUIRED)
 if (GLEW_FOUND)
