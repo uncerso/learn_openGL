@@ -3,7 +3,6 @@
 #include <SOIL/SOIL.h>
 
 #include <cassert>
-#include <string_view>
 #include <span>
 #include <cstdint>
 

@@ -117,14 +117,67 @@ private:
     UniformFloat shininess;
 };
 
-struct UniformLight {
-    UniformLight(Program & program);
-    void set(Light const & light);
+struct UniformLightComponents {
+    UniformLightComponents(Program & program);
+    void set(LightComponents const & light);
 private:
-    UniformVec3f position;
     UniformVec3f ambient;
     UniformVec3f diffuse;
     UniformVec3f specular;
+};
+
+struct UniformSimpleLight {
+    UniformSimpleLight(Program & program);
+    void set(SimpleLight const & light);
+private:
+    UniformLightComponents components;
+    UniformVec3f position;
+};
+
+struct UniformDirectedLight {
+    UniformDirectedLight(Program & program);
+    void set(DirectedLight const & light);
+private:
+    UniformLightComponents components;
+    UniformVec3f direction;
+};
+
+struct UniformSpotLight {
+    UniformSpotLight(Program & program);
+    void set(SpotLight const & light);
+private:
+    UniformLightComponents components;
+    UniformVec3f position;
+    UniformFloat constant;
+    UniformFloat linear;
+    UniformFloat quadratic;
+};
+
+struct UniformRoughProjectorLight {
+    UniformRoughProjectorLight(Program & program);
+    void set(RoughProjectorLight const & light);
+private:
+    UniformLightComponents components;
+    UniformVec3f position;
+    UniformVec3f direction;
+    UniformFloat constant;
+    UniformFloat linear;
+    UniformFloat quadratic;
+    UniformFloat cutOff;
+};
+
+struct UniformProjectorLight {
+    UniformProjectorLight(Program & program);
+    void set(ProjectorLight const & light);
+private:
+    UniformLightComponents components;
+    UniformVec3f position;
+    UniformVec3f direction;
+    UniformFloat constant;
+    UniformFloat linear;
+    UniformFloat quadratic;
+    UniformFloat cutOff;
+    UniformFloat outerCutOff;
 };
 
 } // namespace core

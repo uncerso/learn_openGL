@@ -1,7 +1,6 @@
 #include "buffer.h"
 #include "../opengl.h"
 
-#include <utility>
 #include <cassert>
 
 namespace core {

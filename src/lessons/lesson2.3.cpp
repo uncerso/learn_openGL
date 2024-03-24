@@ -199,7 +199,7 @@ struct Program : public core::Program {
     {}
 
     core::UniformSimpleMaterial material;
-    core::UniformLight light;
+    core::UniformSimpleLight light;
     core::UniformVec3f view_pos;
     core::UniformMat4f model;
     core::UniformMat4f view_projection;
@@ -307,9 +307,9 @@ struct : public core::Renderer {
         drawer->program().view_projection.set(viewProj);
         drawer->program().view_pos.set(actor->pos());
 
-        core::Light light = lamp->light();
-        light.diffuse = 0.5f * glm::vec3(xColor->progress(), yColor->progress(), zColor->progress());
-        light.ambient = 0.2f * light.diffuse;
+        core::SimpleLight light = lamp->light();
+        light.components.diffuse = 0.5f * glm::vec3(xColor->progress(), yColor->progress(), zColor->progress());
+        light.components.ambient = 0.2f * light.components.diffuse;
         drawer->program().light.set(light);
 
         drawer->draw(core::PrimitiveType::Triangles);
@@ -369,10 +369,12 @@ struct : public core::Renderer {
         });
 
         drawer->program().light.set({
+            .components = {
+                .ambient = glm::vec3(1.0),
+                .diffuse = glm::vec3(1.0),
+                .specular = glm::vec3(1.0),
+            },
             .position = lamp->light_pos,
-            .ambient = glm::vec3(1.0),
-            .diffuse = glm::vec3(1.0),
-            .specular = glm::vec3(1.0),
         });
     }
 

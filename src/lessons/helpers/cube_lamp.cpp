@@ -44,17 +44,19 @@ void CubeLamp::draw(glm::mat4 const & viewProj) {
     glm::mat4 model = glm::translate(glm::one<glm::mat4>(), light_pos);
     model = glm::scale(model, glm::vec3(0.2f));
     drawer.program().model.set(model);
- 
+
     drawer.program().viewProjection.set(viewProj);
     drawer.draw(core::PrimitiveType::Triangles);
 }
 
-core::Light CubeLamp::light() const {
+core::SimpleLight CubeLamp::light() const {
     return {
+        .components = {
+            .ambient = {0.2f, 0.2f, 0.2f},
+            .diffuse = {0.5f, 0.5f, 0.5f},
+            .specular = {1.0f, 1.0f, 1.0f},
+        },
         .position = light_pos,
-        .ambient = {0.2f, 0.2f, 0.2f},
-        .diffuse = {0.5f, 0.5f, 0.5f},
-        .specular = {1.0f, 1.0f, 1.0f},
     };
 }
 

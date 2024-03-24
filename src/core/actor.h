@@ -3,8 +3,6 @@
 #include "camera.h"
 #include "keys.h"
 
-#include <iostream>
-
 namespace core {
 
 enum class ActorType {
@@ -71,6 +69,7 @@ public:
 
     glm::mat4 viewProj() const { return camera.viewProj(); }
     glm::vec3 pos() const { return camera.pos; }
+    glm::vec3 dir() const { return camera.front; }
 private:
     void mouseMoveDeltaDefault(glm::vec2 delta) {
         float angle = glm::length(delta) * config.mouse_sensitivity;

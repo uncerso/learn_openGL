@@ -1,6 +1,7 @@
 #pragma once
 
 #include <glm/glm.hpp>
+#include <glm/ext.hpp>
 #include <array>
 
 namespace prim {
@@ -175,5 +176,32 @@ struct TexturedQubeVertexWithNormal {
 constexpr auto TEXTURED_QUBE = internal::zip<TexturedQubeVertex>(QUBE, QUBE_TEX_COORDS);
 constexpr auto QUBE_WITH_NORMALS = internal::zip<QubeVertexWithNormal>(QUBE, QUBE_NORMALS);
 constexpr auto TEXTURED_QUBE_WITH_NORMALS = internal::zip<TexturedQubeVertexWithNormal>(QUBE, QUBE_TEX_COORDS, QUBE_NORMALS);
+
+constexpr std::array TEN_CUBE_POSITIONS = {
+    glm::vec3( 0.0f,  0.0f,  0.0f),
+    glm::vec3( 2.0f,  5.0f, -15.0f),
+    glm::vec3(-1.5f, -2.2f, -2.5f),
+    glm::vec3(-3.8f, -2.0f, -12.3f),
+    glm::vec3( 2.4f, -0.4f, -3.5f),
+    glm::vec3(-1.7f,  3.0f, -7.5f),
+    glm::vec3( 1.3f, -2.0f, -2.5f),
+    glm::vec3( 1.5f,  2.0f, -2.5f),
+    glm::vec3( 1.5f,  0.2f, -1.5f),
+    glm::vec3(-1.3f,  1.0f, -1.5f)
+};
+
+template<size_t N>
+std::array<glm::mat4, N> makeModelMatrices(std::array<glm::vec3, N> const & poss) {
+    std::array<glm::mat4, N> models;
+    for (size_t i = 0; i < N; ++i) {
+        auto & model = models[i];
+        model = glm::translate(glm::one<glm::mat4>(), poss[i]);
+        float angle = 20.0f * float(i);
+        model = glm::rotate(model, glm::radians(angle), {1.0f, 0.3f, 0.5f});
+    }
+    return models;
+}
+
+inline auto TEN_CUBES_MODEL_MATRICES = makeModelMatrices(TEN_CUBE_POSITIONS);
 
 } // namespace prim

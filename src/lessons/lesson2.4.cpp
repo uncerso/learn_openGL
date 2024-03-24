@@ -81,7 +81,7 @@ struct Program : public core::Program {
     {}
 
     core::UniformMaterial material;
-    core::UniformLight light;
+    core::UniformSimpleLight light;
     core::UniformVec3f view_pos;
     core::UniformMat4f model;
     core::UniformMat4f view_projection;
@@ -110,7 +110,7 @@ struct : public core::Renderer {
         material.emplace(
             core::loadResource(core::ImgResources::Container2),
             core::loadResource(core::ImgResources::Container2_specular),
-            32.0f
+            64.0f
         );
 
         auto model_matrix = glm::one<glm::mat4>();
@@ -118,10 +118,12 @@ struct : public core::Renderer {
         drawer->program().normal_matrix.set(core::normalMatrix(model_matrix));
         drawer->program().material.set(*material);
         drawer->program().light.set({
+            .components = {
+                .ambient = glm::vec3(0.2f),
+                .diffuse = glm::vec3(0.5f),
+                .specular = glm::vec3(1.0),
+            },
             .position = lamp->light_pos,
-            .ambient = glm::vec3(1.0),
-            .diffuse = glm::vec3(1.0),
-            .specular = glm::vec3(1.0),
         });
     }
 

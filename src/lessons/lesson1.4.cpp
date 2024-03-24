@@ -1,15 +1,13 @@
 #include "../core/renderer.h"
 #include "../core/drawer.h"
 #include "../core/indexer.h"
-#include "../core/opengl.h"
 
-#include <string>
 #include <optional>
 #include <array>
 
 namespace {
 
-constexpr auto VERTEX_SHADER_SOURCE = 
+constexpr auto VERTEX_SHADER_SOURCE =
     R"~(
     attribute vec3 vPosition;
 
@@ -36,13 +34,13 @@ using Triangle = std::array<glm::vec3, 3>;
 using Rectangle = std::array<glm::vec3, 4>;
 
 constexpr Triangle TRIANGLE = {{
-        {-0.5f, -0.5f, 0.0f}, // Left  
-        { 0.5f, -0.5f, 0.0f}, // Right 
-        { 0.0f,  0.5f, 0.0f}, // Top   
+        {-0.5f, -0.5f, 0.0f}, // Left
+        { 0.5f, -0.5f, 0.0f}, // Right
+        { 0.0f,  0.5f, 0.0f}, // Top
     }};
 
 constexpr Triangle RIGHT_TOP_TRIANGLE = {{
-        { 0.5f,  0.5f, 0.0f}, // Right Top 
+        { 0.5f,  0.5f, 0.0f}, // Right Top
         { 0.5f, -0.5f, 0.0f}, // Right Bottom
         {-0.5f,  0.5f, 0.0f}, // Left Top
     }};
@@ -54,7 +52,7 @@ constexpr Triangle LEFT_BOTTOM_TRIANGLE = {{
     }};
 
 constexpr Rectangle RECTANGLE = {{
-    { 0.5f,  0.5f, 0.0f}, // Right Top 
+    { 0.5f,  0.5f, 0.0f}, // Right Top
     { 0.5f, -0.5f, 0.0f}, // Right Bottom
     {-0.5f,  0.5f, 0.0f}, // Left Top
     {-0.5f, -0.5f, 0.0f}, // Left Bottom

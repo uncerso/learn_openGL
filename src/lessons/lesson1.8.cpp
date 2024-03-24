@@ -221,19 +221,6 @@ struct Task03 : task02::Task02 {
 
 namespace task04 {
 
-constexpr std::array CUBE_POSITIONS = {
-    glm::vec3( 0.0f,  0.0f,  0.0f),
-    glm::vec3( 2.0f,  5.0f, -15.0f),
-    glm::vec3(-1.5f, -2.2f, -2.5f),
-    glm::vec3(-3.8f, -2.0f, -12.3f),
-    glm::vec3( 2.4f, -0.4f, -3.5f),
-    glm::vec3(-1.7f,  3.0f, -7.5f),
-    glm::vec3( 1.3f, -2.0f, -2.5f),
-    glm::vec3( 1.5f,  2.0f, -2.5f),
-    glm::vec3( 1.5f,  0.2f, -1.5f),
-    glm::vec3(-1.3f,  1.0f, -1.5f)
-};
-
 struct Task04 : task03::Task03 {
     const char * name() const noexcept override { return "1.8:0.4"; }
 
@@ -244,11 +231,7 @@ struct Task04 : task03::Task03 {
         drawer->program().view.set(view);
         drawer->program().projection.set(projection);
 
-        for (size_t i = 0; i < CUBE_POSITIONS.size(); ++i) {
-            auto model = glm::translate(glm::one<glm::mat4>(), CUBE_POSITIONS[i]);
-            float angle = 20.0f * float(i); 
-            model = glm::rotate(model, glm::radians(angle), {1.0f, 0.3f, 0.5f});
-
+        for (auto const & model : prim::TEN_CUBES_MODEL_MATRICES) {
             drawer->program().model.set(model);
             drawer->draw(core::PrimitiveType::Triangles);
         }
@@ -273,8 +256,8 @@ struct : task04::Task04 {
         drawer->program().projection.set(projection);
 
         float progress = animation->progress();
-        for (size_t i = 0; i < task04::CUBE_POSITIONS.size(); ++i) {
-            auto model = glm::translate(glm::one<glm::mat4>(), task04::CUBE_POSITIONS[i]);
+        for (size_t i = 0; i < prim::TEN_CUBE_POSITIONS.size(); ++i) {
+            auto model = glm::translate(glm::one<glm::mat4>(), prim::TEN_CUBE_POSITIONS[i]);
             float angle = (i%3 ? glm::radians(20.0f) * float(i) : progress);
             model = glm::rotate(model, angle, {1.0f, 0.3f, 0.5f});
 
