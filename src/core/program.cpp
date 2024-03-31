@@ -9,6 +9,8 @@
 
 namespace core {
 
+using namespace std::string_literals;
+
 namespace {
 
 constexpr int INVALID_LOCATION = -1;
@@ -121,6 +123,10 @@ void Program::disuse() {
     glUseProgram(0);
 }
 
+int Program::uniformLocation(std::string const & name) const {
+    return uniformLocation(name.c_str());
+}
+
 int Program::uniformLocation(char const * name) const {
     using namespace std::string_literals;
 
@@ -220,10 +226,10 @@ void UniformMaterial::set(Material const & material) {
     shininess.set(material.shininess);
 }
 
-UniformLightComponents::UniformLightComponents(Program & program)
-    : ambient(program.uniformLocation("uLight.ambient"))
-    , diffuse(program.uniformLocation("uLight.diffuse"))
-    , specular(program.uniformLocation("uLight.specular"))
+UniformLightComponents::UniformLightComponents(Program & program, char const * prefix)
+    : ambient(program.uniformLocation(prefix + ".ambient"s))
+    , diffuse(program.uniformLocation(prefix + ".diffuse"s))
+    , specular(program.uniformLocation(prefix + ".specular"s))
 {}
 
 void UniformLightComponents::set(LightComponents const & light) {
@@ -233,9 +239,9 @@ void UniformLightComponents::set(LightComponents const & light) {
 }
 
 
-UniformSimpleLight::UniformSimpleLight(Program & program)
-    : components(program)
-    , position(program.uniformLocation("uLight.position"))
+UniformSimpleLight::UniformSimpleLight(Program & program, char const * prefix)
+    : components(program, prefix)
+    , position(program.uniformLocation(prefix + ".position"s))
 {}
 
 void UniformSimpleLight::set(SimpleLight const & light) {
@@ -243,25 +249,25 @@ void UniformSimpleLight::set(SimpleLight const & light) {
     position.set(light.position);
 }
 
-UniformDirectedLight::UniformDirectedLight(Program & program)
-    : components(program)
-    , direction(program.uniformLocation("uLight.direction"))
+UniformDirLight::UniformDirLight(Program & program, char const * prefix)
+    : components(program, prefix)
+    , direction(program.uniformLocation(prefix + ".direction"s))
 {}
 
-void UniformDirectedLight::set(DirectedLight const & light) {
+void UniformDirLight::set(DirLight const & light) {
     components.set(light.components);
     direction.set(light.direction);
 }
 
-UniformSpotLight::UniformSpotLight(Program & program)
-    : components(program)
-    , position(program.uniformLocation("uLight.position"))
-    , constant(program.uniformLocation("uLight.constant"))
-    , linear(program.uniformLocation("uLight.linear"))
-    , quadratic(program.uniformLocation("uLight.quadratic"))
+UniformPointLight::UniformPointLight(Program & program, char const * prefix)
+    : components(program, prefix)
+    , position(program.uniformLocation(prefix + ".position"s))
+    , constant(program.uniformLocation(prefix + ".constant"s))
+    , linear(program.uniformLocation(prefix + ".linear"s))
+    , quadratic(program.uniformLocation(prefix + ".quadratic"s))
 {}
 
-void UniformSpotLight::set(SpotLight const & light) {
+void UniformPointLight::set(PointLight const & light) {
     components.set(light.components);
     position.set(light.position);
     constant.set(light.constant);
@@ -269,17 +275,17 @@ void UniformSpotLight::set(SpotLight const & light) {
     quadratic.set(light.quadratic);
 }
 
-UniformRoughProjectorLight::UniformRoughProjectorLight(Program & program)
-    : components(program)
-    , position(program.uniformLocation("uLight.position"))
-    , direction(program.uniformLocation("uLight.direction"))
-    , constant(program.uniformLocation("uLight.constant"))
-    , linear(program.uniformLocation("uLight.linear"))
-    , quadratic(program.uniformLocation("uLight.quadratic"))
-    , cutOff(program.uniformLocation("uLight.cutOff"))
+UniformRoughSpotLight::UniformRoughSpotLight(Program & program, char const * prefix)
+    : components(program, prefix)
+    , position(program.uniformLocation(prefix + ".position"s))
+    , direction(program.uniformLocation(prefix + ".direction"s))
+    , constant(program.uniformLocation(prefix + ".constant"s))
+    , linear(program.uniformLocation(prefix + ".linear"s))
+    , quadratic(program.uniformLocation(prefix + ".quadratic"s))
+    , cutOff(program.uniformLocation(prefix + ".cutOff"s))
 {}
 
-void UniformRoughProjectorLight::set(RoughProjectorLight const & light) {
+void UniformRoughSpotLight::set(RoughSpotLight const & light) {
     components.set(light.components);
     position.set(light.position);
     direction.set(light.direction);
@@ -289,18 +295,18 @@ void UniformRoughProjectorLight::set(RoughProjectorLight const & light) {
     cutOff.set(light.cutOff);
 }
 
-UniformProjectorLight::UniformProjectorLight(Program & program)
-    : components(program)
-    , position(program.uniformLocation("uLight.position"))
-    , direction(program.uniformLocation("uLight.direction"))
-    , constant(program.uniformLocation("uLight.constant"))
-    , linear(program.uniformLocation("uLight.linear"))
-    , quadratic(program.uniformLocation("uLight.quadratic"))
-    , cutOff(program.uniformLocation("uLight.cutOff"))
-    , outerCutOff(program.uniformLocation("uLight.outerCutOff"))
+UniformSpotLight::UniformSpotLight(Program & program, char const * prefix)
+    : components(program, prefix)
+    , position(program.uniformLocation(prefix + ".position"s))
+    , direction(program.uniformLocation(prefix + ".direction"s))
+    , constant(program.uniformLocation(prefix + ".constant"s))
+    , linear(program.uniformLocation(prefix + ".linear"s))
+    , quadratic(program.uniformLocation(prefix + ".quadratic"s))
+    , cutOff(program.uniformLocation(prefix + ".cutOff"s))
+    , outerCutOff(program.uniformLocation(prefix + ".outerCutOff"s))
 {}
 
-void UniformProjectorLight::set(ProjectorLight const & light) {
+void UniformSpotLight::set(SpotLight const & light) {
     components.set(light.components);
     position.set(light.position);
     direction.set(light.direction);

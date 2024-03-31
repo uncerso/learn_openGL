@@ -15,12 +15,12 @@ struct SimpleLight {
     glm::vec3 position;
 };
 
-struct DirectedLight {
+struct DirLight {
     LightComponents components;
     glm::vec3 direction;
 };
 
-struct SpotLight {
+struct PointLight {
     LightComponents components;
     glm::vec3 position;
     float constant;
@@ -28,7 +28,7 @@ struct SpotLight {
     float quadratic;
 };
 
-struct RoughProjectorLight {
+struct RoughSpotLight {
     LightComponents components;
     glm::vec3 position;
     glm::vec3 direction;
@@ -39,7 +39,7 @@ struct RoughProjectorLight {
 };
 
 
-struct ProjectorLight {
+struct SpotLight {
     LightComponents components;
     glm::vec3 position;
     glm::vec3 direction;

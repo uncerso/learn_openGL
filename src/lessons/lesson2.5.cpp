@@ -41,7 +41,7 @@ constexpr auto FRAGMENT_SHADER_SOURCE =
         float shininess;
     };
 
-    struct DirectedLight {
+    struct DirLight {
         vec3 direction;
         vec3 ambient;
         vec3 diffuse;
@@ -50,12 +50,12 @@ constexpr auto FRAGMENT_SHADER_SOURCE =
 
     uniform vec3 uViewPos;
     uniform Material uMaterial;
-    uniform DirectedLight uLight;
+    uniform DirLight uDirLight;
 
     void main() {
         vec3 normal = normalize(fNormal);
 
-        vec3 lightDir = normalize(-uLight.direction);
+        vec3 lightDir = normalize(-uDirLight.direction);
         float diff = max(0.0, dot(lightDir, normal));
 
         vec3 viewDir = normalize(uViewPos - fPos);
@@ -64,9 +64,9 @@ constexpr auto FRAGMENT_SHADER_SOURCE =
 
         vec3 diffuseFrag = vec3(texture2D(uMaterial.diffuse, fTexCoords));
         vec3 specularFrag = vec3(texture2D(uMaterial.specular, fTexCoords));
-        vec3 ambient = uLight.ambient * diffuseFrag;
-        vec3 diffuse = uLight.diffuse * diffuseFrag * diff;
-        vec3 specular = uLight.specular * specularFrag * spec;
+        vec3 ambient = uDirLight.ambient * diffuseFrag;
+        vec3 diffuse = uDirLight.diffuse * diffuseFrag * diff;
+        vec3 specular = uDirLight.specular * specularFrag * spec;
         gl_FragColor = vec4(diffuse + ambient + specular, 1.0);
     }
     )~";
@@ -83,7 +83,7 @@ struct Program : public core::Program {
     {}
 
     core::UniformMaterial material;
-    core::UniformDirectedLight light;
+    core::UniformDirLight light;
     core::UniformVec3f view_pos;
     core::UniformMat4f model;
     core::UniformMat4f view_projection;
@@ -178,7 +178,7 @@ constexpr auto FRAGMENT_SHADER_SOURCE =
         float shininess;
     };
 
-    struct SpotLight {
+    struct PointLight {
         vec3 position;
         vec3 ambient;
         vec3 diffuse;
@@ -190,14 +190,14 @@ constexpr auto FRAGMENT_SHADER_SOURCE =
 
     uniform vec3 uViewPos;
     uniform Material uMaterial;
-    uniform SpotLight uLight;
+    uniform PointLight uPointLight;
 
     void main() {
         vec3 normal = normalize(fNormal);
-        float distance = length(uLight.position - fPos);
-        float attenuation = 1.0 / (uLight.constant + uLight.linear * distance + uLight.quadratic * distance * distance);
+        float distance = length(uPointLight.position - fPos);
+        float attenuation = 1.0 / (uPointLight.constant + uPointLight.linear * distance + uPointLight.quadratic * distance * distance);
 
-        vec3 lightDir = normalize(uLight.position - fPos);
+        vec3 lightDir = normalize(uPointLight.position - fPos);
         float diff = max(0.0, dot(lightDir, normal));
 
         vec3 viewDir = normalize(uViewPos - fPos);
@@ -206,9 +206,9 @@ constexpr auto FRAGMENT_SHADER_SOURCE =
 
         vec3 diffuseFrag = vec3(texture2D(uMaterial.diffuse, fTexCoords));
         vec3 specularFrag = vec3(texture2D(uMaterial.specular, fTexCoords));
-        vec3 ambient = uLight.ambient * diffuseFrag;
-        vec3 diffuse = uLight.diffuse * diffuseFrag * diff;
-        vec3 specular = uLight.specular * specularFrag * spec;
+        vec3 ambient = uPointLight.ambient * diffuseFrag;
+        vec3 diffuse = uPointLight.diffuse * diffuseFrag * diff;
+        vec3 specular = uPointLight.specular * specularFrag * spec;
         gl_FragColor = vec4(attenuation * (diffuse + ambient + specular), 1.0);
     }
     )~";
@@ -225,7 +225,7 @@ struct Program : public core::Program {
     {}
 
     core::UniformMaterial material;
-    core::UniformSpotLight light;
+    core::UniformPointLight light;
     core::UniformVec3f view_pos;
     core::UniformMat4f model;
     core::UniformMat4f view_projection;
@@ -326,7 +326,7 @@ constexpr auto FRAGMENT_SHADER_SOURCE =
         float shininess;
     };
 
-    struct ProjectorLight {
+    struct SpotLight {
         vec3 position;
         vec3 direction;
         vec3 ambient;
@@ -340,19 +340,19 @@ constexpr auto FRAGMENT_SHADER_SOURCE =
 
     uniform vec3 uViewPos;
     uniform Material uMaterial;
-    uniform ProjectorLight uLight;
+    uniform SpotLight uSpotLight;
 
     void main() {
-        vec3 lightDir = normalize(uLight.position - fPos);
-        float theta = dot(lightDir, normalize(-uLight.direction));
+        vec3 lightDir = normalize(uSpotLight.position - fPos);
+        float theta = dot(lightDir, normalize(-uSpotLight.direction));
         vec3 diffuseFrag = vec3(texture2D(uMaterial.diffuse, fTexCoords));
-        vec3 ambient = uLight.ambient * diffuseFrag;
+        vec3 ambient = uSpotLight.ambient * diffuseFrag;
         vec3 color = ambient;
 
-        if (theta > uLight.cutOff) {
+        if (theta > uSpotLight.cutOff) {
             vec3 normal = normalize(fNormal);
-            float distance = length(uLight.position - fPos);
-            float attenuation = 1.0 / (uLight.constant + uLight.linear * distance + uLight.quadratic * distance * distance);
+            float distance = length(uSpotLight.position - fPos);
+            float attenuation = 1.0 / (uSpotLight.constant + uSpotLight.linear * distance + uSpotLight.quadratic * distance * distance);
 
 
             float diff = max(0.0, dot(lightDir, normal));
@@ -362,8 +362,8 @@ constexpr auto FRAGMENT_SHADER_SOURCE =
             float spec = pow(max(0.0, dot(viewDir, reflectDir)), uMaterial.shininess);
 
             vec3 specularFrag = vec3(texture2D(uMaterial.specular, fTexCoords));
-            vec3 diffuse = uLight.diffuse * diffuseFrag * diff;
-            vec3 specular = uLight.specular * specularFrag * spec;
+            vec3 diffuse = uSpotLight.diffuse * diffuseFrag * diff;
+            vec3 specular = uSpotLight.specular * specularFrag * spec;
             color += attenuation * (diffuse + specular);
         }
 
@@ -383,7 +383,7 @@ struct Program : public core::Program {
     {}
 
     core::UniformMaterial material;
-    core::UniformRoughProjectorLight light;
+    core::UniformRoughSpotLight light;
     core::UniformVec3f view_pos;
     core::UniformMat4f model;
     core::UniformMat4f view_projection;
@@ -484,7 +484,7 @@ constexpr auto FRAGMENT_SHADER_SOURCE =
         float shininess;
     };
 
-    struct ProjectorLight {
+    struct SpotLight {
         vec3 position;
         vec3 direction;
         vec3 ambient;
@@ -499,21 +499,21 @@ constexpr auto FRAGMENT_SHADER_SOURCE =
 
     uniform vec3 uViewPos;
     uniform Material uMaterial;
-    uniform ProjectorLight uLight;
+    uniform SpotLight uSpotLight;
 
     void main() {
-        vec3 lightDir = normalize(uLight.position - fPos);
-        float theta = dot(lightDir, normalize(-uLight.direction));
-        float intensity = (theta - uLight.outerCutOff) / (uLight.cutOff - uLight.outerCutOff);
+        vec3 lightDir = normalize(uSpotLight.position - fPos);
+        float theta = dot(lightDir, normalize(-uSpotLight.direction));
+        float intensity = (theta - uSpotLight.outerCutOff) / (uSpotLight.cutOff - uSpotLight.outerCutOff);
         intensity = clamp(intensity, 0.0, 1.0);
         vec3 diffuseFrag = vec3(texture2D(uMaterial.diffuse, fTexCoords));
-        vec3 ambient = uLight.ambient * diffuseFrag;
+        vec3 ambient = uSpotLight.ambient * diffuseFrag;
         vec3 color = ambient;
 
         if (intensity > 0.0) {
             vec3 normal = normalize(fNormal);
-            float distance = length(uLight.position - fPos);
-            float attenuation = 1.0 / (uLight.constant + uLight.linear * distance + uLight.quadratic * distance * distance);
+            float distance = length(uSpotLight.position - fPos);
+            float attenuation = 1.0 / (uSpotLight.constant + uSpotLight.linear * distance + uSpotLight.quadratic * distance * distance);
 
 
             float diff = max(0.0, dot(lightDir, normal));
@@ -523,8 +523,8 @@ constexpr auto FRAGMENT_SHADER_SOURCE =
             float spec = pow(max(0.0, dot(viewDir, reflectDir)), uMaterial.shininess);
 
             vec3 specularFrag = vec3(texture2D(uMaterial.specular, fTexCoords));
-            vec3 diffuse = uLight.diffuse * diffuseFrag * diff;
-            vec3 specular = uLight.specular * specularFrag * spec;
+            vec3 diffuse = uSpotLight.diffuse * diffuseFrag * diff;
+            vec3 specular = uSpotLight.specular * specularFrag * spec;
             color += intensity * attenuation * (diffuse + specular);
         }
 
@@ -544,7 +544,7 @@ struct Program : public core::Program {
     {}
 
     core::UniformMaterial material;
-    core::UniformProjectorLight light;
+    core::UniformSpotLight light;
     core::UniformVec3f view_pos;
     core::UniformMat4f model;
     core::UniformMat4f view_projection;

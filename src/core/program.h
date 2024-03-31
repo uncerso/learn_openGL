@@ -7,6 +7,7 @@
 #include "material.h"
 #include "texture.h"
 
+#include <string_view>
 #include <vector>
 #include <glm/glm.hpp>
 
@@ -27,6 +28,7 @@ public:
     static void disuse();
 
     int uniformLocation(char const * name) const;
+    int uniformLocation(std::string const & name) const;
 
     void enableAttributes() const;
     void disableAttributes() const;
@@ -118,7 +120,7 @@ private:
 };
 
 struct UniformLightComponents {
-    UniformLightComponents(Program & program);
+    UniformLightComponents(Program & program, char const * prefix);
     void set(LightComponents const & light);
 private:
     UniformVec3f ambient;
@@ -127,24 +129,24 @@ private:
 };
 
 struct UniformSimpleLight {
-    UniformSimpleLight(Program & program);
+    UniformSimpleLight(Program & program, char const * prefix = "uLight");
     void set(SimpleLight const & light);
 private:
     UniformLightComponents components;
     UniformVec3f position;
 };
 
-struct UniformDirectedLight {
-    UniformDirectedLight(Program & program);
-    void set(DirectedLight const & light);
+struct UniformDirLight {
+    UniformDirLight(Program & program, char const * prefix = "uDirLight");
+    void set(DirLight const & light);
 private:
     UniformLightComponents components;
     UniformVec3f direction;
 };
 
-struct UniformSpotLight {
-    UniformSpotLight(Program & program);
-    void set(SpotLight const & light);
+struct UniformPointLight {
+    UniformPointLight(Program & program, char const * prefix = "uPointLight");
+    void set(PointLight const & light);
 private:
     UniformLightComponents components;
     UniformVec3f position;
@@ -153,9 +155,9 @@ private:
     UniformFloat quadratic;
 };
 
-struct UniformRoughProjectorLight {
-    UniformRoughProjectorLight(Program & program);
-    void set(RoughProjectorLight const & light);
+struct UniformRoughSpotLight {
+    UniformRoughSpotLight(Program & program, char const * prefix = "uSpotLight");
+    void set(RoughSpotLight const & light);
 private:
     UniformLightComponents components;
     UniformVec3f position;
@@ -166,9 +168,9 @@ private:
     UniformFloat cutOff;
 };
 
-struct UniformProjectorLight {
-    UniformProjectorLight(Program & program);
-    void set(ProjectorLight const & light);
+struct UniformSpotLight {
+    UniformSpotLight(Program & program, char const * prefix = "uSpotLight");
+    void set(SpotLight const & light);
 private:
     UniformLightComponents components;
     UniformVec3f position;
