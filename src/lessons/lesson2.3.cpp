@@ -90,7 +90,7 @@ struct : public core::Renderer {
     void prepare() override {
         using namespace std::chrono_literals;
         program.emplace();
-        vbo.emplace(prim::QUBE_WITH_NORMALS.data(), prim::QUBE_WITH_NORMALS.size(), sizeof(prim::QUBE_WITH_NORMALS[0]), core::BufferUsage::StaticDraw);
+        vbo.emplace(prim::CUBE_WITH_NORMALS.data(), prim::CUBE_WITH_NORMALS.size(), sizeof(prim::CUBE_WITH_NORMALS[0]), core::BufferUsage::StaticDraw);
         drawer.emplace(*program, *vbo);
         actor.emplace(core::Camera(WidthHeightRatio(), glm::vec3{1, 1, 4}));
         lamp.emplace();
@@ -218,7 +218,7 @@ struct : public core::Renderer {
     void prepare() override {
         using namespace std::chrono_literals;
         program.emplace();
-        vbo.emplace(prim::QUBE_WITH_NORMALS.data(), prim::QUBE_WITH_NORMALS.size(), sizeof(prim::QUBE_WITH_NORMALS[0]), core::BufferUsage::StaticDraw);
+        vbo.emplace(prim::CUBE_WITH_NORMALS.data(), prim::CUBE_WITH_NORMALS.size(), sizeof(prim::CUBE_WITH_NORMALS[0]), core::BufferUsage::StaticDraw);
         drawer.emplace(*program, *vbo);
         actor.emplace(core::Camera(WidthHeightRatio(), glm::vec3{1, 1, 4}));
         lamp.emplace();
@@ -280,7 +280,7 @@ struct : public core::Renderer {
     void prepare() override {
         using namespace std::chrono_literals;
         program.emplace();
-        vbo.emplace(prim::QUBE_WITH_NORMALS.data(), prim::QUBE_WITH_NORMALS.size(), sizeof(prim::QUBE_WITH_NORMALS[0]), core::BufferUsage::StaticDraw);
+        vbo.emplace(prim::CUBE_WITH_NORMALS.data(), prim::CUBE_WITH_NORMALS.size(), sizeof(prim::CUBE_WITH_NORMALS[0]), core::BufferUsage::StaticDraw);
         drawer.emplace(*program, *vbo);
         actor.emplace(core::Camera(WidthHeightRatio(), glm::vec3{1, 1, 4}));
         lamp.emplace();
@@ -352,7 +352,7 @@ struct : public core::Renderer {
     void prepare() override {
         using namespace std::chrono_literals;
         program.emplace();
-        vbo.emplace(prim::QUBE_WITH_NORMALS.data(), prim::QUBE_WITH_NORMALS.size(), sizeof(prim::QUBE_WITH_NORMALS[0]), core::BufferUsage::StaticDraw);
+        vbo.emplace(prim::CUBE_WITH_NORMALS.data(), prim::CUBE_WITH_NORMALS.size(), sizeof(prim::CUBE_WITH_NORMALS[0]), core::BufferUsage::StaticDraw);
         drawer.emplace(*program, *vbo);
         actor.emplace(core::Camera(WidthHeightRatio(), glm::vec3{1, 1, 4}));
         lamp.emplace();

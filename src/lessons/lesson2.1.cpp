@@ -53,7 +53,7 @@ struct : public core::Renderer {
     void prepare() override {
         using namespace std::chrono_literals;
         program.emplace();
-        vbo.emplace(prim::QUBE.data(), prim::QUBE.size(), sizeof(prim::QUBE[0]), core::BufferUsage::StaticDraw);
+        vbo.emplace(prim::CUBE.data(), prim::CUBE.size(), sizeof(prim::CUBE[0]), core::BufferUsage::StaticDraw);
         drawer.emplace(*program, *vbo);
         actor.emplace(core::Camera(WidthHeightRatio(), glm::vec3{1, 1, 4}));
         lamp.emplace();

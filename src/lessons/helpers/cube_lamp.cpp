@@ -36,7 +36,7 @@ CubeLamp::Program::Program()
 
 CubeLamp::CubeLamp(glm::vec3 light_pos)
     : light_pos(light_pos)
-    , vbo(prim::QUBE.data(), prim::QUBE.size(), sizeof(prim::QUBE[0]), core::BufferUsage::StaticDraw)
+    , vbo(prim::CUBE.data(), prim::CUBE.size(), sizeof(prim::CUBE[0]), core::BufferUsage::StaticDraw)
     , drawer(program, vbo)
 {}
 

@@ -60,7 +60,7 @@ struct : public core::Renderer {
     void prepare() override {
         using namespace std::chrono_literals;
         program.emplace();
-        vbo.emplace(prim::TEXTURED_QUBE.data(), prim::TEXTURED_QUBE.size(), sizeof(prim::TEXTURED_QUBE[0]), core::BufferUsage::StaticDraw);
+        vbo.emplace(prim::TEXTURED_CUBE.data(), prim::TEXTURED_CUBE.size(), sizeof(prim::TEXTURED_CUBE[0]), core::BufferUsage::StaticDraw);
         drawer.emplace(*program, *vbo);
         texture1.emplace(core::loadResource(core::ImgResources::WoodContainer));
         texture2.emplace(core::loadResource(core::ImgResources::AwesomeFace));

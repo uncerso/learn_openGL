@@ -47,11 +47,11 @@ constexpr auto zip(std::array<Types, N> ... args) -> std::array<Result, N> {
 
 } // namespace internal
 
-constexpr size_t QUBE_POINTS = 6*6;
+constexpr size_t CUBE_POINTS = 6*6;
 
-using Qube = std::array<glm::vec3, QUBE_POINTS>;
+using Cube = std::array<glm::vec3, CUBE_POINTS>;
 
-constexpr Qube QUBE = {{
+constexpr Cube CUBE = {{
     {-0.5f, -0.5f, -0.5f},
     { 0.5f, -0.5f, -0.5f},
     { 0.5f,  0.5f, -0.5f},
@@ -95,9 +95,9 @@ constexpr Qube QUBE = {{
     {-0.5f,  0.5f, -0.5f}
 }};
 
-using QubeTexCoords = std::array<glm::vec2, QUBE_POINTS>;
+using CubeTexCoords = std::array<glm::vec2, CUBE_POINTS>;
 
-constexpr QubeTexCoords QUBE_TEX_COORDS = {{
+constexpr CubeTexCoords CUBE_TEX_COORDS = {{
     {0, 0},
     {1, 0},
     {1, 1},
@@ -142,11 +142,11 @@ constexpr QubeTexCoords QUBE_TEX_COORDS = {{
 }};
 
 
-using QubeNormals = std::array<glm::vec3, QUBE_POINTS>;
+using CubeNormals = std::array<glm::vec3, CUBE_POINTS>;
 
 #define REPEAT_VEC3_SIX_TIMES(a, b, c) a,b,c, a,b,c, a,b,c, a,b,c, a,b,c, a,b,c,
 
-constexpr QubeNormals QUBE_NORMALS = {{
+constexpr CubeNormals CUBE_NORMALS = {{
     REPEAT_VEC3_SIX_TIMES({ 0,  0, -1})
     REPEAT_VEC3_SIX_TIMES({ 0,  0,  1})
     REPEAT_VEC3_SIX_TIMES({-1,  0,  0})
@@ -157,25 +157,25 @@ constexpr QubeNormals QUBE_NORMALS = {{
 
 #undef REPEAT_VEC3_SIX_TIMES
 
-struct TexturedQubeVertex {
+struct TexturedCubeVertex {
     glm::vec3 pos;
     glm::vec2 texCoord;
 };
 
-struct QubeVertexWithNormal {
+struct CubeVertexWithNormal {
     glm::vec3 pos;
     glm::vec3 normal;
 };
 
-struct TexturedQubeVertexWithNormal {
+struct TexturedCubeVertexWithNormal {
     glm::vec3 pos;
     glm::vec2 texCoord;
     glm::vec3 normal;
 };
 
-constexpr auto TEXTURED_QUBE = internal::zip<TexturedQubeVertex>(QUBE, QUBE_TEX_COORDS);
-constexpr auto QUBE_WITH_NORMALS = internal::zip<QubeVertexWithNormal>(QUBE, QUBE_NORMALS);
-constexpr auto TEXTURED_QUBE_WITH_NORMALS = internal::zip<TexturedQubeVertexWithNormal>(QUBE, QUBE_TEX_COORDS, QUBE_NORMALS);
+constexpr auto TEXTURED_CUBE = internal::zip<TexturedCubeVertex>(CUBE, CUBE_TEX_COORDS);
+constexpr auto CUBE_WITH_NORMALS = internal::zip<CubeVertexWithNormal>(CUBE, CUBE_NORMALS);
+constexpr auto TEXTURED_CUBE_WITH_NORMALS = internal::zip<TexturedCubeVertexWithNormal>(CUBE, CUBE_TEX_COORDS, CUBE_NORMALS);
 
 constexpr std::array TEN_CUBE_POSITIONS = {
     glm::vec3( 0.0f,  0.0f,  0.0f),

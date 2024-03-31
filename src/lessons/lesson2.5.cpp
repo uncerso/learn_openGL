@@ -103,7 +103,7 @@ struct : public core::Renderer {
     void prepare() override {
         using namespace std::chrono_literals;
         program.emplace();
-        constexpr auto& cube = prim::TEXTURED_QUBE_WITH_NORMALS;
+        constexpr auto& cube = prim::TEXTURED_CUBE_WITH_NORMALS;
         vbo.emplace(cube.data(), cube.size(), sizeof(cube[0]), core::BufferUsage::StaticDraw);
         drawer.emplace(*program, *vbo);
         actor.emplace(core::Camera(WidthHeightRatio(), glm::vec3{1, 1, 4}));
@@ -245,7 +245,7 @@ struct : public core::Renderer {
     void prepare() override {
         using namespace std::chrono_literals;
         program.emplace();
-        constexpr auto& cube = prim::TEXTURED_QUBE_WITH_NORMALS;
+        constexpr auto& cube = prim::TEXTURED_CUBE_WITH_NORMALS;
         vbo.emplace(cube.data(), cube.size(), sizeof(cube[0]), core::BufferUsage::StaticDraw);
         drawer.emplace(*program, *vbo);
         actor.emplace(core::Camera(WidthHeightRatio(), glm::vec3{1, 1, 4}));
@@ -403,7 +403,7 @@ struct : public core::Renderer {
     void prepare() override {
         using namespace std::chrono_literals;
         program.emplace();
-        constexpr auto& cube = prim::TEXTURED_QUBE_WITH_NORMALS;
+        constexpr auto& cube = prim::TEXTURED_CUBE_WITH_NORMALS;
         vbo.emplace(cube.data(), cube.size(), sizeof(cube[0]), core::BufferUsage::StaticDraw);
         drawer.emplace(*program, *vbo);
         actor.emplace(core::Camera(WidthHeightRatio(), glm::vec3{1, 1, 4}));
@@ -564,7 +564,7 @@ struct : public core::Renderer {
     void prepare() override {
         using namespace std::chrono_literals;
         program.emplace();
-        constexpr auto& cube = prim::TEXTURED_QUBE_WITH_NORMALS;
+        constexpr auto& cube = prim::TEXTURED_CUBE_WITH_NORMALS;
         vbo.emplace(cube.data(), cube.size(), sizeof(cube[0]), core::BufferUsage::StaticDraw);
         drawer.emplace(*program, *vbo);
         actor.emplace(core::Camera(WidthHeightRatio(), glm::vec3{1, 1, 4}));
