@@ -7,7 +7,7 @@
 #include "material.h"
 #include "texture.h"
 
-#include <string_view>
+#include <string>
 #include <vector>
 #include <glm/glm.hpp>
 

@@ -180,7 +180,7 @@ struct : public core::Renderer {
         auto model_matrix = glm::one<glm::mat4>();
         drawer->program().model.set(model_matrix);
         drawer->program().normal_matrix.set(core::normalMatrix(model_matrix));
-        drawer->program().light_pos.set(lamp->light_pos);
+        drawer->program().light_pos.set(lamp->light.position);
     }
 
     void render(float frame_delta_time) override {
@@ -290,7 +290,7 @@ struct : public core::Renderer {
         auto model_matrix = glm::one<glm::mat4>();
         drawer->program().model.set(model_matrix);
         drawer->program().normal_matrix.set(core::normalMatrix(model_matrix));
-        drawer->program().light_pos.set(lamp->light_pos);
+        drawer->program().light_pos.set(lamp->light.position);
     }
 
     void render(float frame_delta_time) override {
@@ -361,8 +361,8 @@ struct : public core::Renderer {
         drawer->program().light_color.set({1, 1, 1});
         drawer->program().view_pos.set(actor->pos());
 
-        lamp->light_pos = glm::rotate(glm::angleAxis(animation->progress(), glm::vec3{0, 1, 0}), BASE_LIGHT_POS);
-        drawer->program().light_pos.set(lamp->light_pos);
+        lamp->light.position = glm::rotate(glm::angleAxis(animation->progress(), glm::vec3{0, 1, 0}), BASE_LIGHT_POS);
+        drawer->program().light_pos.set(lamp->light.position);
 
         drawer->draw(core::PrimitiveType::Triangles);
         lamp->draw(viewProj);
@@ -488,7 +488,7 @@ struct : public core::Renderer {
         auto model_matrix = glm::one<glm::mat4>();
         drawer->program().model.set(model_matrix);
         drawer->program().normal_matrix.set(core::normalMatrix(model_matrix));
-        drawer->program().light_pos.set(lamp->light_pos);
+        drawer->program().light_pos.set(lamp->light.position);
     }
 
     void render(float frame_delta_time) override {

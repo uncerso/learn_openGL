@@ -3,7 +3,6 @@
 #include "exception.h"
 
 #include <cassert>
-#include <string>
 
 namespace core {
 

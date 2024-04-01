@@ -117,14 +117,7 @@ struct : public core::Renderer {
         drawer->program().model.set(model_matrix);
         drawer->program().normal_matrix.set(core::normalMatrix(model_matrix));
         drawer->program().material.set(*material);
-        drawer->program().light.set({
-            .components = {
-                .ambient = glm::vec3(0.2f),
-                .diffuse = glm::vec3(0.5f),
-                .specular = glm::vec3(1.0),
-            },
-            .position = lamp->light_pos,
-        });
+        drawer->program().light.set(lamp->simpleLight());
     }
 
     void render(float frame_delta_time) override {

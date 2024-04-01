@@ -98,7 +98,7 @@ struct : public core::Renderer {
         auto model_matrix = glm::one<glm::mat4>();
         drawer->program().model.set(model_matrix);
         drawer->program().normal_matrix.set(core::normalMatrix(model_matrix));
-        drawer->program().light_pos.set(lamp->light_pos);
+        drawer->program().light_pos.set(lamp->light.position);
 
         drawer->program().light_color.set({1, 1, 1});
         drawer->program().material.set({
@@ -234,7 +234,7 @@ struct : public core::Renderer {
             .shininess = 32.0f,
         });
 
-        drawer->program().light.set(lamp->light());
+        drawer->program().light.set(lamp->simpleLight());
     }
 
     void render(float frame_delta_time) override {
@@ -307,7 +307,7 @@ struct : public core::Renderer {
         drawer->program().view_projection.set(viewProj);
         drawer->program().view_pos.set(actor->pos());
 
-        core::SimpleLight light = lamp->light();
+        core::SimpleLight light = lamp->simpleLight();
         light.components.diffuse = 0.5f * glm::vec3(xColor->progress(), yColor->progress(), zColor->progress());
         light.components.ambient = 0.2f * light.components.diffuse;
         drawer->program().light.set(light);
@@ -374,7 +374,7 @@ struct : public core::Renderer {
                 .diffuse = glm::vec3(1.0),
                 .specular = glm::vec3(1.0),
             },
-            .position = lamp->light_pos,
+            .position = lamp->light.position,
         });
     }
 

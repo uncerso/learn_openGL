@@ -6,6 +6,7 @@
 #include "program.h"
 #include "vertex_buffer.h"
 #include "index_buffer.h"
+#include <functional>
 
 namespace core {
 
@@ -25,6 +26,8 @@ protected:
     ~DrawerBase();
 
 public:
+    DrawerBase(DrawerBase&&) = default;
+
     void draw(PrimitiveType type, size_t from, size_t size);
     void draw(PrimitiveType type);
 

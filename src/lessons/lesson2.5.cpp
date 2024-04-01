@@ -140,7 +140,7 @@ struct : public core::Renderer {
 
     void prepareFrameRendering() override {
         glEnable(GL_DEPTH_TEST);
-        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+        glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     }
 
@@ -258,17 +258,7 @@ struct : public core::Renderer {
         );
 
         drawer->program().material.set(*material);
-        drawer->program().light.set({
-            .components = {
-                .ambient = glm::vec3(0.2f),
-                .diffuse = glm::vec3(0.5f),
-                .specular = glm::vec3(1.0),
-            },
-            .position = lamp->light_pos,
-            .constant = 0.1f,
-            .linear = 0.09f,
-            .quadratic = 0.032f,
-        });
+        drawer->program().light.set(lamp->light);
     }
 
     void render(float frame_delta_time) override {
@@ -287,7 +277,7 @@ struct : public core::Renderer {
 
     void prepareFrameRendering() override {
         glEnable(GL_DEPTH_TEST);
-        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+        glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     }
 
@@ -425,16 +415,16 @@ struct : public core::Renderer {
 
         drawer->program().light.set({
             .components = {
-                .ambient = glm::vec3(0.2f),
-                .diffuse = glm::vec3(0.5f),
+                .ambient = glm::vec3(0.1f),
+                .diffuse = glm::vec3(0.8f),
                 .specular = glm::vec3(1.0),
             },
             .position = actor->pos(),
             .direction = actor->dir(),
-            .constant = 0.1f,
+            .constant = 1.0f,
             .linear = 0.09f,
             .quadratic = 0.032f,
-            .cutOff = glm::cos(glm::radians(15.5f))
+            .cutOff = glm::cos(glm::radians(12.5f))
         });
 
         for (auto const & model_matrix : prim::TEN_CUBES_MODEL_MATRICES) {
@@ -446,7 +436,7 @@ struct : public core::Renderer {
 
     void prepareFrameRendering() override {
         glEnable(GL_DEPTH_TEST);
-        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+        glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     }
 
@@ -586,17 +576,17 @@ struct : public core::Renderer {
 
         drawer->program().light.set({
             .components = {
-                .ambient = glm::vec3(0.2f),
-                .diffuse = glm::vec3(0.5f),
+                .ambient = glm::vec3(0.1f),
+                .diffuse = glm::vec3(0.8f),
                 .specular = glm::vec3(1.0),
             },
             .position = actor->pos(),
             .direction = actor->dir(),
-            .constant = 0.1f,
+            .constant = 1.0f,
             .linear = 0.09f,
             .quadratic = 0.032f,
-            .cutOff = glm::cos(glm::radians(15.5f)),
-            .outerCutOff = glm::cos(glm::radians(25.5f)),
+            .cutOff = glm::cos(glm::radians(12.5f)),
+            .outerCutOff = glm::cos(glm::radians(17.5f)),
         });
 
         for (auto const & model_matrix : prim::TEN_CUBES_MODEL_MATRICES) {
@@ -608,7 +598,7 @@ struct : public core::Renderer {
 
     void prepareFrameRendering() override {
         glEnable(GL_DEPTH_TEST);
-        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+        glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     }
 
